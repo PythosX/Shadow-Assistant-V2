@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Shadow Assistant</title>
+<link rel="stylesheet" href="/static/site.css"><link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body data-view="home">
+<canvas id="bg"></canvas><div class="glow" id="glow"></div>
+<div id="toasts"></div>
+
+<div class="app">
+<aside>
+  <a href="/" class="brand"><span class="logo-mark">S</span><div><strong>Shadow Assistant</strong><small>Autonomous DM Assistant</small></div></a>
+  <nav id="nav">
+    <button class="active" data-view="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg><span>Dashboard</span></button>
+    <button data-view="inbox"><svg viewBox="0 0 24 24"><path d="M3 5h18v11h-5l-2 3h-4l-2-3H3z"/></svg><span>Inbox</span><em id="navBadge" class="nb" hidden>0</em></button>
+    <button data-view="memory"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 00-6 6c0 2 1 3 2 4v3h8v-3c1-1 2-2 2-4a6 6 0 00-6-6zM9 20h6"/></svg><span>Memory</span></button>
+    <button data-view="analytics"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Analytics</span></button>
+    <button data-view="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg><span>Settings</span></button>
+  </nav>
+  <div class="mode-card"><div class="orb"></div><div><b>Auto mode</b><small>Human only for important</small></div></div>
+  <div class="profile"><div class="avatar">AC</div><div><b>{{creator.name}}</b><small>AI automation active</small></div><a href="/logout" class="logout" title="Log out">⎋</a></div>
+</aside>
+
+<main>
+<header class="top">
+  <div><label class="tag" id="dateLine">LIVE AI INBOX</label><h1 id="greet">Welcome back</h1><p>Shadow Assistant reads conversations, replies automatically, and interrupts you only when attention is needed.</p></div>
+  <div class="top-r"><span class="online"><i></i> AI ONLINE</span><a class="btn sm" href="/">← Home</a></div>
+</header>
+
+<!-- HOME / INBOX -->
+<div class="view" id="v-home">
+<section class="stats">
+  <div class="stat s1"><div class="ico">✉</div><div><small>Incoming</small><b id="sMessages">0</b><em>messages received</em></div></div>
+  <div class="stat s2"><div class="ico">⚡</div><div><small>AI Replies</small><b id="sReplies">0</b><em>handled automatically</em></div></div>
+  <div class="stat s3 danger"><div class="ico">🚨</div><div><small>Escalations</small><b id="sEscalations">0</b><em>needs your attention</em></div></div>
+  <div class="stat s4"><div class="ico">◎</div><div><small>Mode</small><b>Auto</b><em>human only for important</em></div></div>
+</section>
+
+<section class="grid">
+  <div class="panel inbox">
+    <div class="head"><div><label class="tag">CONVERSATIONS</label><h2>Live Inbox</h2></div><button class="icon-btn" id="refresh" onclick="loadConversations()" title="Refresh">↻</button></div>
+    <div id="conversationList" class="list"></div>
+  </div>
+
+  <div class="panel chat">
+    <div class="head"><div class="who"><div class="avatar big" id="chatAva">?</div><div><label class="tag">CONVERSATION</label><h2 id="chatName">Select a conversation</h2></div></div><span id="chatStatus" class="status">—</span></div>
+    <div id="messages" class="messages"><div class="placeholder"><div class="ph-ic">💬</div>Choose a conversation from the left,<br>or simulate a new DM below.</div></div>
+    <div class="simulate">
+      <label class="tag">SIMULATE INCOMING DM</label>
+      <div class="sendrow">
+        <input id="sender" placeholder="Sender name" value="Demo User">
+        <input id="dm" placeholder="Type an incoming message… (Enter to send)">
+        <button id="sendBtn" class="btn primary sm" onclick="sendDM()"><span>Send</span><i class="sp"></i></button>
+      </div>
+      <div class="examples">
+        <button onclick="example('What camera do you use?')">📷 FAQ</button>
+        <button onclick="example('What do you record your voice with?')">🎙 Reworded</button>
+        <button onclick="example('We want to offer you ₹200000 for a sponsorship next month.')">💰 Business</button>
+        <button onclick="example('Can we discuss something important?')">❓ Complicated</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel brain">
+    <div class="head"><div><label class="tag">AI ACTIVITY</label><h2>Decision Center</h2></div><span id="decisionBadge" class="dbadge">WAITING</span></div>
+    <div id="decision"><div class="placeholder"><div class="radar"><i></i><i></i><i></i></div>Shadow Assistant will show the<br>latest AI decision here.</div></div>
+  </div>
+</section>
+</div>
+
+<!-- MEMORY -->
+<div class="view" id="v-memory" hidden>
+  <div class="panel wide">
+    <div class="head"><div><label class="tag">CREATOR KNOWLEDGE</label><h2>Memory <span class="count" id="memCount"></span></h2></div><input id="memSearch" class="search" placeholder="Search knowledge…"></div>
+    <div id="memList" class="mem-grid"></div>
+  </div>
+</div>
+
+<!-- ANALYTICS -->
+<div class="view" id="v-analytics" hidden>
+  <div class="an-grid">
+    <div class="panel"><label class="tag">AUTOMATION SPLIT</label><h2>Handled vs escalated</h2><div id="donutBox" class="donut-box"></div></div>
+    <div class="panel"><label class="tag">OVERVIEW</label><h2>Performance</h2><div id="barBox" class="bars"></div></div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="view" id="v-settings" hidden>
+  <div class="panel wide">
+    <label class="tag">PREFERENCES</label><h2>Settings <span class="count">demo</span></h2>
+    <div class="set-list">
+      <div class="set"><div><b>Auto-reply to routine questions</b><small>Answer low-risk FAQs instantly</small></div><button class="tgl on" data-k="auto"></button></div>
+      <div class="set"><div><b>Escalate money &amp; sponsorships</b><small>Never negotiate or promise a deal automatically</small></div><button class="tgl on" data-k="esc"></button></div>
+      <div class="set"><div><b>Toast notifications</b><small>Show pop-ups for new decisions</small></div><button class="tgl on" data-k="toast"></button></div>
+      <div class="set"><div><b>Background particles</b><small>Animated network background</small></div><button class="tgl on" data-k="fx"></button></div>
+    </div>
+    <div class="persona"><label class="tag">CREATOR PROFILE</label><p><b>{{creator.name}}</b> · Tone: {{creator.tone}}</p><p class="muted">{{creator.facts}}</p></div>
+  </div>
+</div>
+</main>
+</div>
+
+<script>window.CREATOR_NAME={{ creator.name|tojson }};window.MEMORY={{ creator.memory|tojson }};</script>
+<script src="/static/app.js"></script>
+<script src="/static/dashboard.js"></script>
+</body></html>

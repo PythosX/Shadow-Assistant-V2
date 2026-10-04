@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Log in — Shadow Assistant</title>
+<link rel="stylesheet" href="/static/site.css"><link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+<canvas id="bg"></canvas><div class="glow" id="glow"></div>
+<div id="curtain"><div><span class="logo-mark">S</span><p>OPENING YOUR INBOX…</p></div></div>
+<div class="shell">
+  <aside class="side">
+    <a href="/" class="brand"><span class="logo-mark">S</span>Shadow Assistant</a>
+    <div>
+      <h2>Welcome back to your <span class="grad">smarter inbox.</span></h2>
+      <p>Log in to see how Shadow Assistant answers routine DMs and flags the conversations that need you.</p>
+      <div class="float">
+        <div class="fc"><small>INCOMING</small>“Which camera are you shooting with?”</div>
+        <div class="fc"><small>AUTO REPLY</small>I usually record with my Sony A7 IV.</div>
+        <div class="fc"><small>ESCALATED</small>Sponsorship offer — needs your review.</div>
+      </div>
+    </div>
+    <a href="/" class="back">← Back to home</a>
+  </aside>
+
+  <main class="formside">
+    <div class="box" id="box">
+      <h1>Log in</h1>
+      <p>Use the demo account below to explore the dashboard.</p>
+
+      <div class="demo">
+        <div class="demo-top"><b>🔑 DEMO CREDENTIALS</b><button type="button" id="fill">Autofill ✨</button></div>
+        <div class="row"><span>Email</span><code data-copy="{{ demo_email }}" title="Click to copy">{{ demo_email }}</code></div>
+        <div class="row"><span>Password</span><code data-copy="{{ demo_password }}" title="Click to copy">{{ demo_password }}</code></div>
+      </div>
+
+      <form id="form" autocomplete="on" novalidate>
+        <div class="field"><input id="email" type="email" placeholder=" " autocomplete="username" required><span>Email address</span></div>
+        <div class="field"><input id="password" type="password" placeholder=" " autocomplete="current-password" required><span>Password</span>
+          <button type="button" class="eye" id="eye" aria-label="Show password">👁</button></div>
+        <button class="btn primary submit" id="submit" type="submit"><i class="sp"></i><span class="tx">Log in to dashboard →</span></button>
+        <div class="err" id="err" role="alert"></div>
+      </form>
+    </div>
+  </main>
+</div>
+<script>window.DEMO={email:{{ demo_email|tojson }},password:{{ demo_password|tojson }}}</script>
+<script src="/static/login.js"></script>
+</body></html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shadow Assistant — AI DM assistant for creators</title>
+<meta name="description" content="Shadow Assistant answers routine DMs automatically and escalates important conversations to you.">
+<link rel="stylesheet" href="/static/site.css"><link rel="stylesheet" href="/static/landing.css">
+</head>
+<body>
+<canvas id="bg"></canvas><div class="glow" id="glow"></div>
+
+<nav class="top" id="nav">
+  <a href="/" class="brand"><span class="logo-mark">S</span>Shadow Assistant</a>
+  <div class="links"><a href="#how">How it works</a><a href="#features">Features</a><a href="#control">Human control</a></div>
+  <div class="nav-cta">
+    {% if logged_in %}<a class="btn primary sm" href="/dashboard">Open dashboard →</a>
+    {% else %}<a class="btn sm ghost" href="/login">Log in</a><a class="btn primary sm" href="/login">Try demo →</a>{% endif %}
+  </div>
+</nav>
+
+<section class="wrap hero">
+  <div>
+    <span class="pill word" style="animation-delay:.05s"><i></i> AI inbox · online 24/7</span>
+    <h1>
+      <span class="word" style="animation-delay:.15s">Your DMs,</span>
+      <span class="word grad" style="animation-delay:.3s">handled.</span><br>
+      <span class="word" style="animation-delay:.45s">Your attention,</span>
+      <span class="word grad" style="animation-delay:.6s">protected.</span>
+    </h1>
+    <p class="lead word" style="animation-delay:.75s">Shadow Assistant understands the meaning of every message, answers routine questions in your voice, and escalates sponsorships and deals to you — so nothing important is ever auto-negotiated.</p>
+    <div class="cta word" style="animation-delay:.9s">
+      <a class="btn primary" href="/login">Launch live demo →</a>
+      <a class="btn" href="#how">See how it works</a>
+    </div>
+    <div class="trust word" style="animation-delay:1.05s"><span>No API keys needed for demo</span><span>Human-in-the-loop</span><span>Creator-approved answers only</span></div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="chip c1"><span class="tag">Intent</span><b class="ok" id="chipIntent">Understanding…</b></div>
+    <div class="phone" id="phone">
+      <div class="phone-head"><div class="ava">AC</div><div><b>Alex Creator · Inbox</b><small>● Shadow Assistant active</small></div></div>
+      <div class="chat" id="chat"></div>
+    </div>
+    <div class="chip c2"><span class="tag">Decision</span><b id="chipDecision">—</b></div>
+  </div>
+</section>
+
+<div class="marquee"><div class="track" id="track">
+  <span>Which camera are you using?</span><span>Can I collaborate with you?</span><span>We'd like to sponsor your channel</span><span>What mic is in your setup?</span><span>Invite you to speak at our event</span><span>Where do you get music?</span><span>Paid promotion inquiry</span><span>Do you edit your own videos?</span>
+</div></div>
+
+<section class="block"><div class="wrap">
+  <div class="stats-row">
+    <div class="stat reveal"><b data-count="40" data-suffix="+">0</b><span>creator knowledge entries ready to answer</span></div>
+    <div class="stat reveal" style="--d:.1s"><b data-count="3">0</b><span>AI stages: understand · retrieve · respond</span></div>
+    <div class="stat reveal" style="--d:.2s"><b data-count="0">0</b><span>deals negotiated automatically</span></div>
+    <div class="stat reveal" style="--d:.3s"><b data-count="100" data-suffix="%">0</b><span>of important messages routed to you</span></div>
+  </div>
+</div></section>
+
+<section class="block" id="how"><div class="wrap">
+  <div class="head-c reveal"><label class="tag">How it works</label><h2>From message to decision in <span class="grad">four steps</span></h2><p>Not a keyword bot. Shadow Assistant reasons about what the sender actually means.</p></div>
+  <div class="pipe reveal" id="pipe">
+    <div class="step"><div class="num">🧠</div><h3>Understand</h3><p>Reads intent and context — even when the wording differs from your saved FAQs.</p></div>
+    <div class="step"><div class="num">🔎</div><h3>Retrieve</h3><p>Finds the matching facts from your approved creator knowledge.</p></div>
+    <div class="step"><div class="num">⚖️</div><h3>Reason</h3><p>Scores priority and confidence, checking your guardrails for money and deals.</p></div>
+    <div class="step"><div class="num">🚦</div><h3>Respond / Escalate</h3><p>Replies instantly for routine DMs, or flags the conversation for you.</p></div>
+  </div>
+</div></section>
+
+<section class="block" id="features"><div class="wrap">
+  <div class="head-c reveal"><label class="tag">Features</label><h2>Everything a busy creator <span class="grad">needs</span></h2></div>
+  <div class="feat">
+    <div class="card reveal"><div class="ic">💬</div><h3>Live inbox</h3><p>Every conversation in one place, with ones needing attention clearly badged.</p></div>
+    <div class="card reveal" style="--d:.08s"><div class="ic">🤖</div><h3>Natural auto-replies</h3><p>Answers sound like you, built only from facts you approved. Nothing invented.</p></div>
+    <div class="card reveal" style="--d:.16s"><div class="ic">🚨</div><h3>Smart escalation</h3><p>Sponsorships, money, contracts and sensitive topics always come to you.</p></div>
+    <div class="card reveal"><div class="ic">📊</div><h3>Decision center</h3><p>See intent, priority, confidence and the reason behind every AI action.</p></div>
+    <div class="card reveal" style="--d:.08s"><div class="ic">✅</div><h3>Approve or take over</h3><p>Review drafts with one click or jump into the conversation yourself.</p></div>
+    <div class="card reveal" style="--d:.16s"><div class="ic">🧪</div><h3>DM simulator</h3><p>Test any message instantly before connecting a real messaging platform.</p></div>
+  </div>
+</div></section>
+
+<section class="block" id="control"><div class="wrap">
+  <div class="head-c reveal"><label class="tag">Human control</label><h2>Automation for routine. <span class="grad">You</span> for what matters.</h2></div>
+  <div class="split">
+    <div class="lane a reveal"><h3>✓ Handled automatically</h3><p>Low-risk, repetitive, fully answerable.</p>
+      <ul><li>“What camera do you use?”</li><li>“How often do you post?”</li><li>“Where can I find your latest videos?”</li><li>“Do you use a tripod?”</li></ul></div>
+    <div class="lane b reveal" style="--d:.12s"><h3>🚨 Escalated to you</h3><p>High-stakes or uncertain — never auto-promised.</p>
+      <ul><li>“We'd like to offer ₹2,00,000 for a sponsorship”</li><li>“Can we discuss a brand partnership?”</li><li>“Media interview request”</li><li>“Something important — can we talk?”</li></ul></div>
+  </div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="cta-box reveal">
+    <h2>See it work in <span class="grad">30 seconds</span></h2>
+    <p>Log in with the demo account and send your own test DMs.</p>
+    <a class="btn primary" href="/login">Go to demo login →</a>
+    <div class="cred"><span>Email <code>demo@shadowassistant.app</code></span><span>Password <code>Shadow@2026</code></span></div>
+  </div>
+</div></section>
+
+<footer><span>© 2026 Shadow Assistant · Hackathon prototype</span><span>Automation for routine conversations. Human control for important ones.</span></footer>
+<script src="/static/landing.js"></script>
+</body></html>
